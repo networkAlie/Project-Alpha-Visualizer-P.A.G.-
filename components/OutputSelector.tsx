@@ -22,7 +22,7 @@ export const OutputSelector: React.FC<OutputSelectorProps> = ({ onSelect, isLoad
             key={option.id}
             onClick={() => onSelect(option.id)}
             disabled={isLoading}
-            className="flex items-center justify-center text-center p-4 bg-brand-bg border border-brand-border rounded-lg hover:bg-brand-primary hover:text-white hover:border-brand-primary transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-surface focus:ring-brand-primary disabled:opacity-50 disabled:cursor-wait"
+            className="flex items-center justify-center text-center p-4 bg-brand-bg border border-brand-border rounded-lg hover:bg-brand-primary hover:text-white hover:border-brand-primary transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-surface focus:ring-brand-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {option.icon}
             {option.label}

@@ -1,9 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { GeneratedVisualPrompt } from '../types';
 
-// Initialize the Google Gemini AI client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
-
 // Define the expected JSON schema for the AI's response
 const responseSchema = {
   type: Type.ARRAY,
@@ -32,7 +29,12 @@ const responseSchema = {
 };
 
 
-const generateVisuals = async (rawInput: string | object, context: 'article' | 'presentation' | 'video'): Promise<GeneratedVisualPrompt[]> => {
+const generateVisuals = async (rawInput: string | object, apiKey: string, context: 'article' | 'presentation' | 'video'): Promise<GeneratedVisualPrompt[]> => {
+  if (!apiKey) {
+    throw new Error("Gemini API key is missing.");
+  }
+  const ai = new GoogleGenAI({ apiKey });
+  
   const contextInstruction = {
     article: "bir Medium makalesi için infografik ve konsept görselleri",
     presentation: "bir müşteri sunumu (pitch deck) için profesyonel slayt görselleri",
@@ -95,14 +97,14 @@ ${processedInput}
   }
 };
 
-export const generateMediumArticle = (rawInput: string | object): Promise<GeneratedVisualPrompt[]> => {
-  return generateVisuals(rawInput, 'article');
+export const generateMediumArticle = (rawInput: string | object, apiKey: string): Promise<GeneratedVisualPrompt[]> => {
+  return generateVisuals(rawInput, apiKey, 'article');
 };
 
-export const generatePitchDeck = (rawInput: string | object): Promise<GeneratedVisualPrompt[]> => {
-  return generateVisuals(rawInput, 'presentation');
+export const generatePitchDeck = (rawInput: string | object, apiKey: string): Promise<GeneratedVisualPrompt[]> => {
+  return generateVisuals(rawInput, apiKey, 'presentation');
 };
 
-export const generateVideoKit = (rawInput: string | object): Promise<GeneratedVisualPrompt[]> => {
-  return generateVisuals(rawInput, 'video');
+export const generateVideoKit = (rawInput: string | object, apiKey: string): Promise<GeneratedVisualPrompt[]> => {
+  return generateVisuals(rawInput, apiKey, 'video');
 };

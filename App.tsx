@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { ApiKeyInput } from './components/ApiKeyInput';
 import { ProjectInput } from './components/ProjectInput';
 import { OutputSelector } from './components/OutputSelector';
 import { ContentOutput } from './components/ContentOutput';
@@ -6,7 +7,7 @@ import { generateMediumArticle, generatePitchDeck, generateVideoKit } from './se
 import type { OutputType, GeneratedContent } from './types';
 
 const App: React.FC = () => {
-  // State can now be a string or a parsed object
+  const [apiKey, setApiKey] = useState<string>('');
   const [rawInput, setRawInput] = useState<string | object | null>(null);
   const [selectedOutput, setSelectedOutput] = useState<OutputType | null>(null);
   const [generatedContent, setGeneratedContent] = useState<GeneratedContent>(null);
@@ -37,6 +38,10 @@ const App: React.FC = () => {
 
   const handleSelectOutput = useCallback(async (outputType: OutputType) => {
     if (!rawInput) return;
+    if (!apiKey) {
+      setError("Please enter and save your Gemini API key before generating content.");
+      return;
+    }
 
     setIsLoading(true);
     setGeneratedContent(null);
@@ -46,11 +51,11 @@ const App: React.FC = () => {
     try {
       let content: GeneratedContent = null;
       if (outputType === 'medium') {
-        content = await generateMediumArticle(rawInput);
+        content = await generateMediumArticle(rawInput, apiKey);
       } else if (outputType === 'deck') {
-        content = await generatePitchDeck(rawInput);
+        content = await generatePitchDeck(rawInput, apiKey);
       } else if (outputType === 'video') {
-        content = await generateVideoKit(rawInput);
+        content = await generateVideoKit(rawInput, apiKey);
       }
       setGeneratedContent(content);
     } catch (e) {
@@ -59,7 +64,7 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [rawInput]);
+  }, [rawInput, apiKey]);
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text font-sans flex flex-col items-center p-4 sm:p-6 md:p-8">
@@ -73,11 +78,13 @@ const App: React.FC = () => {
           </p>
         </header>
 
+        <ApiKeyInput apiKey={apiKey} setApiKey={setApiKey} />
+
         <main className="space-y-8">
           <ProjectInput onProcess={handleProcessInput} error={error} />
 
           {rawInput && (
-            <OutputSelector onSelect={handleSelectOutput} isLoading={isLoading} />
+            <OutputSelector onSelect={handleSelectOutput} isLoading={isLoading || !apiKey} />
           )}
           
           <ContentOutput
