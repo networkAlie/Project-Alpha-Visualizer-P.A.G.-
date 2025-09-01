@@ -1,0 +1,5 @@
+{
+  "name": "Project Alpha Visualizer (P.A.G.)",
+  "description": "A web application to transform S.A.G.A. JSON reports into professional marketing materials like Medium articles and pitch decks, complete with AI-generated visual prompts.",
+  "requestFramePermissions": []
+}
