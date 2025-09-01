@@ -1,18 +1,3 @@
-<div align="center">
-<img width="1200" height="475" alt="P.A.G. Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
-<div align="center">
-
-# Project Alpha Visualizer (P.A.G.)
-**An Internal Operations Tool for Alie Network**
-
-![Project Status](https://img.shields.io/badge/status-active_development-green)
-![Framework](https://img.shields.io/badge/framework-React-blue?logo=react)
-![AI Model](https://img.shields.io/badge/AI-Gemini_2.5_Flash-purple)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
-
-</div>
 
 P.A.G. is an AI-powered web application that transforms in-depth project analyses (S.A.G.A. Reports) or raw text from Alie Network's **'Alpha Generation Engine'** into compelling marketing materials in seconds.
 
